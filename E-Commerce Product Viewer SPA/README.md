@@ -16,7 +16,6 @@ This project was created for COMP 3512 – Web Development II. The app simulates
 
 - Everything runs on the client using JS. Product data and cart state are stored in localStorage so they persist between visits.
 
-  **Pages Link:** https://nandan-v.github.io/COMP_3512_Assignment2/
 
 # License
 
