@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COMP 3512 Clothing Assignment</title>
+    <link rel="stylesheet" href="css/styles.css">
+    
+</head>
+<body>
+<header class="site-header">
+    <div class="logo" data-view="home">Zenith Apparel</div>
+
+    <nav class="main-nav">
+        <a href="#" class="nav-link" data-view="home">Home</a>
+        <a href="#" class="nav-link" data-view="browse">Browse</a>
+        <a href="#" class="nav-link" id="aboutLink">About</a>
+    </nav>
+
+    <button id="cartLink" class="cart-button">
+        Cart <span id="cartCount" class="cart-count">0</span>
+    </button>
+    
+</header>
+
+<main>
+    <!-- HOME VIEW -->
+    <article id="view-home" class="view">
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Modern Clothing Collection</h1>
+                <p>Find your perfect style for any occasion. Browse our collection, check out the details, and shop with a cart that saves your picks.</p>
+                <button id="homeShopNow" class="primary-button">Shop now</button>
+            </div>
+        </section>
+
+        <section class="home-featured">
+            <h2>Featured Products</h2>
+            <div id="homeFeatured" class="card-grid">
+                <!-- populated by JS -->
+            </div>
+        </section>
+    </article>
+
+    <!-- BROWSE VIEW for user -->
+    <article id="view-browse" class="view hidden">
+        <header class="view-header">
+            <h1>Browse Products</h1>
+        </header>
+
+        <div class="browse-layout">
+            <!-- Filters to choose from -->
+            <aside class="filters">
+                <h2>Departments</h2>
+
+                <section class="filter-group">
+                    <h3>Gender</h3>
+                    <div id="filter-gender" class="filter-options">
+                        <label><input type="checkbox" value="womens"> Womens</label>
+                        <label><input type="checkbox" value="mens"> Mens</label>
+                    </div>
+                </section>
+
+                <section class="filter-group">
+                    <h3>Category</h3>
+                    <div id="filter-category" class="filter-options">
+                        <!-- categories generated from the data -->
+                    </div>
+                </section>
+
+                <section class="filter-group">
+                    <h3>Size</h3>
+                    <div id="filter-size" class="filter-options">
+                        <!-- sizes generated from the data -->
+                    </div>
+                </section>
+
+                <section class="filter-group">
+                    <h3>Color</h3>
+                    <div id="filter-color" class="filter-options">
+                        <!-- colors generated from the data -->
+                    </div>
+                </section>
+            </aside>
+
+            <!-- Results -->
+            <section class="browse-main">
+                <div class="browse-toolbar">
+                    <div class="browse-toolbar-left">
+                        <span id="resultsCount">0</span>Results
+                        <button id="clearFilters" class="secondary-button small">
+                            Clear All Filters
+                        </button>
+                    </div>
+
+                    <div class="sort-controls">
+                        <label for="sortField">Sort</label>
+                        <select id="sortField">
+                            <option value="name">Product Name</option>
+                            <option value="price">Price</option>
+                            <option value="category">Category</option>
+                        </select>
+                        <button id="sortDirection" class="secondary-button small"
+                                data-direction="asc">A-Z</button>
+                    </div>
+                </div>
+
+                <div id="activeFilters" class="active-filters">
+                    <!-- filter chips -->
+                </div>
+
+                <div id="browseResults" class="card-grid">
+                    <!-- product cards -->
+                </div>
+
+                <p id="noResultsMessage" class="muted hidden">
+                    No products match the selected filters.
+                </p>
+
+                <a href="#" class="secondary-button back-to-top">Back to top</a>
+            </section>
+        </div>
+    </article>
+
+    <!-- SINGLE PRODUCT VIEW -->
+    <article id="view-product" class="view hidden">
+        <header class="view-header product-header">
+            <button id="productBack" class="secondary-button small">&larr; Back</button>
+            <nav class="breadcrumbs" id="productBreadcrumbs">
+                <!-- Home > Gender > Category > Product Title -->
+            </nav>
+        </header>
+        <section class="product-layout">
+            <div class="product-images">
+                <div id="productMainImage" class="image-placeholder"></div>
+                <div class="thumb-row">
+                    <div class="thumb-placeholder"></div>
+                    <div class="thumb-placeholder"></div>
+                    <div class="thumb-placeholder"></div>
+                </div>
+            </div>
+
+            <div class="product-details">
+                <h1 id="productTitle"></h1>
+                <p id="productPrice" class="product-price"></p>
+                <p id="productDescription"></p>
+                <p><strong>Material:</strong> <span id="productMaterial"></span></p>
+
+                <form id="productOptions" class="product-options">
+                    <label>
+                        Size
+                        <select id="productSize"></select>
+                    </label>
+
+                    <label>
+                        Color
+                        <select id="productColor"></select>
+                    </label>
+
+                    <label>
+                        Quantity
+                        <input type="number" id="productQuantity" min="1" value="1">
+                    </label>
+
+                    <button id="productAddToCart" class="primary-button" type="submit">
+                        + Add to Cart
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="related-products">
+            <h2>Related Products</h2>
+            <div id="relatedProducts" class="card-grid">
+                <!-- populated by JS -->
+            </div>
+        </section>
+    </article>
+    
+    <!-- CART VIEW -->
+    <article id="view-cart" class="view hidden">
+        <header class="view-header">
+            <h1>Shopping Cart</h1>
+        </header>
+
+        <section class="cart-layout">
+            <div class="cart-items">
+                <table class="cart-table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Item</th>
+                        <th>Color</th>
+                        <th>Size</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cartBody">
+                    <!-- rows from JS -->
+                    </tbody>
+                </table>
+                <p id="emptyCartMessage" class="muted">
+                    Your cart is empty.
+                </p>
+            </div>
+
+            <aside class="cart-summary">
+                <section class="shipping">
+                    <h2>Shipping</h2>
+                    <label>
+                        Method
+                        <select id="shippingMethod">
+                            <option value="standard">Standard</option>
+                            <option value="express">Express</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </label>
+                    <label>
+                        Destination
+                        <select id="shippingDestination">
+                            <option value="CA">Canada</option>
+                            <option value="US">United States</option>
+                            <option value="INTL">International</option>
+                        </select>
+                    </label>
+                </section>
+
+                <section class="summary">
+                    <h2>Summary</h2>
+                    <dl>
+                        <div class="summary-row">
+                            <dt>Merchandise</dt>
+                            <dd id="summaryMerchandise">$0.00</dd>
+                        </div>
+                        <div class="summary-row">
+                            <dt>Shipping</dt>
+                            <dd id="summaryShipping">$0.00</dd>
+                        </div>
+                        <div class="summary-row">
+                            <dt>Tax</dt>
+                            <dd id="summaryTax">$0.00</dd>
+                        </div>
+                        <div class="summary-row total">
+                            <dt>Total</dt>
+                            <dd id="summaryTotal">$0.00</dd>
+                        </div>
+                    </dl>
+                    <button id="checkoutButton" class="primary-button">
+                        Checkout
+                    </button>
+                </section>
+            </aside>
+        </section>
+    </article>
+    
+    <!-- ABOUT DIALOG -->
+    <dialog id="aboutDialog">
+        <article class="about-content">
+            <header class="about-header">
+                <h2>About This App</h2>
+                <button id="aboutClose" class="icon-button">&times;</button>
+            </header>
+            <section>
+                <p>This project is for COMP 3512 (Assignment 2). It's just a small clothing shop page
+                   that shows products, lets you browse them, view a single item, and add to cart.</p>
+                
+                <p><strong>Created By: </strong></p>
+                <ul>
+                    <li>Zain Choudhry</li>
+                </ul>
+
+                  <p><strong>Technologies Used: </strong></p>
+                <ul>
+                  <li>JS</li>
+                  <li>Web Storage API (localStorage)</li>
+                  <li>HTML + CSS (no external CSS libraries)</li>
+                  <li>VS Code for editing</li>
+                </ul>
+                
+                   <p><strong>Attribution:</strong> CSS was generated using ChatGPT (2025)</p>
+                <p><strong>GitHub repository:</strong>
+                    <a id="githubLink" href="https://github.com/mvpzain26/Zain-projects.git" target="_blank">
+                        https://github.com/mvpzain26/Zain-projects.git
+                    </a>
+                </p>
+            </section>
+            <footer class="about-footer">
+                <button id="aboutCloseFooter" class="secondary-button">Close</button>
+            </footer>
+        </article>
+    </dialog>
+
+    <!-- TOAST / SNACKBAR (confirmation alert at the bottom) -->
+    <div id="toast" class="toast hidden"></div>
+</main>
+
+<footer class="site-footer">
+    <p>&copy; <span id="footerYear"></span> Zenith Apparel &middot; Source on <a id="footerGithubLink" href="https://github.com/mvpzain26/Zain-projects.git" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script src="js/state.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/product.js"></script>
+<script src="js/home.js"></script>
+<script src="js/browse-filters.js"></script>
+<script src="js/browse-results.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
+
+
