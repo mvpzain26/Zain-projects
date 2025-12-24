@@ -1,6 +1,6 @@
 # Overview
 
-The app simulates a small online clothing store. Users can:
+The app simulates a small online clothing store. Users can: 
 
 * Browse a catalog of products
 * Filter and sort items in multiple ways
